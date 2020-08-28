@@ -25,7 +25,7 @@ Crie um diretório via terminal ou via gerenciador de arquivos.
 
 No seu terminal acesse essa pasta e execute o comando abaixo:
 
-``` git clone https://github.com/KelvinLopes/bootcamp-second-rocketseat-desafios-realizados.git ```
+``` git clone https://github.com/KelvinLopes/bootcamp-second-rocketseat-desafio02.git ```
 
 
 ### Rodar o projeto
