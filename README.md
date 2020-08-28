@@ -30,6 +30,4 @@ No seu terminal acesse essa pasta e execute o comando abaixo:
 
 ### Rodar o projeto
 
-``` 
-    yarn dev
-```
+``` yarn dev ```
