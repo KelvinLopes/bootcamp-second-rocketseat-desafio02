@@ -20,15 +20,21 @@ app.post("/repositories", (request, response) => {
   
   const { title, url , techs } = request.body;
 
-  const repositorie =  { id: uuid(), title, url, techs };
+  const repository =  { id: uuid(), title, url, techs };
 
   if(title === "" || url === "" || techs === "") {
     return response.status(400).json( { message: "Digite todos os campos solicitados." })
   }
 
-  repositories.push(repositorie);
+  const repositoryIndex = repositories.findIndex(repoId => repoId.title === title );
+
+  if(repositoryIndex !== -1 ) {
+    return response.status(400).json({ error: 'Já existe um item com esse nome.' })
+  }
+
+  repositories.push(repository);
  
-  return response.status(201).json(repositorie);
+  return response.status(201).json(repository);
 
 });
 
@@ -37,22 +43,27 @@ app.put("/repositories/:id", (request, response) => {
   const { id } = request.params;
   const { title, url , techs } = request.body;
 
-  const repositorieIndex = repositories.findIndex(repoId => repoId.id === id );
+  const repositoryIndex = repositories.findIndex(repoId => repoId.id === id );
 
-  if(repositorieIndex < 0 ) {
+  if(repositoryIndex < 0 ) {
     return response.status(400).json({ message: 'Esse repostório não foi encontrado ou não existe.' })
   }
 
-  const repositorie = {
+  const repository = {
     id,
     title,
-    url , 
+    url, 
     techs
   }
 
-  repositories[repositorieIndex] = repositorie;
+  repositories[repositoryIndex] = {
+    id,
+    title,
+    url,
+    techs
+  };
 
-  return response.status(201).json(repositorie);
+  return response.status(201).json(repository);
 
 });
 
@@ -61,15 +72,15 @@ app.delete("/repositories/:id", (request, response) => {
 
   const { id } = request.params;
 
-  const repositorieIndex = repositories.findIndex(repoId => repoId.id === id );
+  const repositoryIndex = repositories.findIndex(repoId => repoId.id === id );
 
-  if(repositorieIndex < 0 ) {
-    return response.status(400).json({ message: 'Esse repostório não foi encontrado ou não existe.' })
+  if(repositoryIndex < 0 ) {
+    return response.status(400).json({ error: 'Esse repostório não foi encontrado ou não existe.' })
   }
 
-  repositories.splice( repositorieIndex , 1 )
+  repositories.splice( repositoryIndex , 1 )
 
-  return response.status(200).json({ message: 'Repositório deletado com sucesso da lista.' })
+  return response.status(204).send();
 
 });
 
