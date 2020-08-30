@@ -28,26 +28,6 @@ app.post("/repositories", (request, response) => {
     likes: 0
   };
 
-  /*
-  * Se for utilizar os testes, comente as verificações:
-  * Verifica campos vazios e verifica se o item já existe.
-  * Pois, elas não fazem parte do teste automatizado e receberá neles erros.
-  */
-
-/** */
-//Verifica campos vazios
-  if(title === "" || url === "" || techs === "") {
-    return response.status(400).json( { message: "Digite todos os campos solicitados." })
-  }
-
-//Verifica se o item já existe
-  const repositoryIndex = repositories.findIndex(repoId => repoId.title === title );
-
-  if(repositoryIndex !== -1 ) {
-    return response.status(400).json({ error: 'Já existe um item com esse nome.' });
-  }
-  /** */
-
   repositories.push(repository);
  
   return response.status(201).json(repository);
